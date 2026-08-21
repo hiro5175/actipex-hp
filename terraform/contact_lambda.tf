@@ -46,7 +46,7 @@ data "aws_iam_policy_document" "contact_lambda_ses" {
     actions = ["ses:SendEmail", "ses:SendRawEmail"]
     resources = [
       aws_ses_email_identity.contact.arn,
-      # info@a-nabors.jp has a "my-first-configuration-set" Configuration Set
+      # k.suzuki@actipex.com has a "my-first-configuration-set" Configuration Set
       # attached (set up outside terraform, before this resource existed).
       # SES requires ses:SendEmail authorization on that resource too whenever
       # the sending identity has a configuration set attached.

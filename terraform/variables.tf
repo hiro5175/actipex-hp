@@ -12,5 +12,5 @@ variable "hosted_zone_id" {
 
 variable "contact_dest_email" {
   description = "Address the contact form notifies (also used as SES sender)"
-  default     = "info@a-nabors.jp"
+  default     = "k.suzuki@actipex.com"
 }
