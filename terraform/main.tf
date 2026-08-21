@@ -64,6 +64,29 @@ resource "aws_cloudfront_origin_access_control" "site" {
   signing_protocol = "sigv4"
 }
 
+# CloudFront Function: rewrite extensionless URIs to their static-export .html file
+resource "aws_cloudfront_function" "rewrite_html" {
+  name    = "rewrite-html"
+  runtime = "cloudfront-js-2.0"
+  comment = "Append .html / index.html for Next static export routes"
+  publish = true
+
+  code = <<-EOT
+    function handler(event) {
+      var request = event.request;
+      var uri = request.uri;
+
+      if (uri.endsWith('/')) {
+        request.uri += 'index.html';
+      } else if (!uri.includes('.')) {
+        request.uri += '.html';
+      }
+
+      return request;
+    }
+  EOT
+}
+
 # Cloud Front
 resource "aws_cloudfront_distribution" "site" {
 
@@ -98,6 +121,11 @@ resource "aws_cloudfront_distribution" "site" {
       cookies {
         forward = "none"
       }
+    }
+
+    function_association {
+      event_type   = "viewer-request"
+      function_arn = aws_cloudfront_function.rewrite_html.arn
     }
   }
 
