@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { motion } from "framer-motion";
 
 export default function Home() {
@@ -241,7 +242,7 @@ export default function Home() {
           <div className="space-y-3 text-left">
             <div className="text-xs font-bold text-white uppercase tracking-wider">Navigation</div>
             <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-xs font-medium">
-              <a href="/" className="hover:text-white transition-colors">ホーム</a>
+              <Link href="/" className="hover:text-white transition-colors">ホーム</Link>
               <a href="/about" className="hover:text-white transition-colors">私たちについて</a>
               <a href="/services" className="hover:text-white transition-colors">サービス</a>
               <a href="/contact" className="hover:text-white transition-colors">お問い合わせ</a>
