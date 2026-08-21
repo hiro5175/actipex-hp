@@ -44,7 +44,7 @@ const companyRows = [
   { label: "代表",          value: "鈴木 健晟",                         bold: true,  email: false },
   { label: "所在地",        value: "神奈川県川崎市川崎区殿町1-14-3-302", bold: false, email: false },
   { label: "電話番号",      value: "080-2237-9248",                     bold: false, email: false },
-  { label: "メールアドレス", value: "k.suzuki.logi@gmail.com",           bold: false, email: true  },
+  { label: "メールアドレス", value: "k.suzuki@actipex.com",           bold: false, email: true  },
 ];
 
 const messageBody = [
