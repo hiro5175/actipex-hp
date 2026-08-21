@@ -9,3 +9,7 @@ output "bucket_name" {
 output "github_actions_role_arn" {
   value = aws_iam_role.github_actions_deploy.arn
 }
+
+output "contact_lambda_function_url" {
+  value = aws_lambda_function_url.contact.function_url
+}
