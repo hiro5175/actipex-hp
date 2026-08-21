@@ -9,3 +9,8 @@ variable "domain_name" {
 variable "hosted_zone_id" {
   default = "Z09260852LGJZ4RN31E90"
 }
+
+variable "contact_dest_email" {
+  description = "Address the contact form notifies (also used as SES sender)"
+  default     = "info@a-nabors.jp"
+}
