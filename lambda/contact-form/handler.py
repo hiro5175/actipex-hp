@@ -6,7 +6,7 @@ CORSはFunction URL側の設定で許可オリジンを絞る想定。ここで�
 
 環境変数:
   SES_SOURCE_EMAIL  送信元アドレス（SESで検証済みであること。未設定ならSES_DEST_EMAILを使用）
-  SES_DEST_EMAIL    通知先アドレス（未設定なら info@a-nabors.jp）
+  SES_DEST_EMAIL    通知先アドレス（未設定なら k.suzuki@actipex.com）
 
 CORSはLambda Function URL側の設定（terraform/contact_lambda.tf）で完結させる。
 ここでCORSヘッダーを付与すると、AWSが自動付与する分と重複して
@@ -22,7 +22,7 @@ from botocore.exceptions import ClientError
 
 ses = boto3.client("ses")
 
-DEST_EMAIL = os.environ.get("SES_DEST_EMAIL", "info@a-nabors.jp")
+DEST_EMAIL = os.environ.get("SES_DEST_EMAIL", "k.suzuki@actipex.com")
 SOURCE_EMAIL = os.environ.get("SES_SOURCE_EMAIL", DEST_EMAIL)
 
 EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
