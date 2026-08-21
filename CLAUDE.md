@@ -4,10 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository layout
 
-This repo has two independent parts at the top level:
+This repo has three independent parts at the top level:
 
 - `src/` — the Next.js corporate site (all app work happens here; see below).
-- `terraform/` — AWS infrastructure (S3 + CloudFront + ACM + Route53) that hosts the exported static site.
+- `terraform/` — AWS infrastructure (S3 + CloudFront + ACM + Route53 for the static site; Lambda + SES for the contact form).
+- `lambda/contact-form/` — Python handler for the contact form backend (see below).
 
 There is no root `package.json` — always `cd src` before running any npm/node command.
 
@@ -51,7 +52,8 @@ Standard Next.js App Router site, all client-rendered (`"use client"` on every p
 - `site.config.ts` (repo root of `src/`, i.e. `src/site.config.ts`) — single source of truth for company name/legal name/contact info, switched by the `entityType` flag (`"sole_proprietor" | "corporation"`). Per the file's own header comment, flipping to a corporation is meant to be a one-line change here with no other files touched — don't hardcode company/legal name strings elsewhere.
 - `src/lib/useSiteConfig.ts` — thin wrapper re-exporting `site.config.ts` as `siteConfig` with an added `logoUrl`. Despite the `use`-prefixed name it is not a React hook, just a plain import.
 - Path alias `@/*` → `src/src/*` (see `tsconfig.json`), e.g. `@/lib/useSiteConfig`, `@/components/Header`.
-- The contact form (`src/app/contact/page.tsx`) is currently non-functional — `onSubmit` just calls `preventDefault()` with no backend wired up.
+- The contact form (`src/app/contact/page.tsx`) posts JSON to a Lambda Function URL (`NEXT_PUBLIC_CONTACT_API_URL`, see `src/.env.local`) that sends a notification email via SES. Backend: `lambda/contact-form/handler.py`, provisioned by `terraform/contact_lambda.tf`. `terraform apply` redeploys the Lambda code (zipped via `data.archive_file`), so a handler.py change needs a `terraform apply`, not just a site rebuild.
+  - CORS for the Function URL is controlled *only* by the `cors` block in `terraform/contact_lambda.tf` — AWS auto-injects `Access-Control-Allow-Origin` etc. into every response (preflight and actual). Do **not** add CORS headers in `handler.py` too; a prior bug did this and browsers rejected the resulting duplicate header as a CORS violation (fetch failed with a generic network error, masking the real cause).
 
 ## Content notes
 

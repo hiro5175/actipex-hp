@@ -36,11 +36,22 @@ resource "aws_iam_role_policy_attachment" "contact_lambda_basic" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
+data "aws_caller_identity" "current" {}
+
+data "aws_region" "current" {}
+
 data "aws_iam_policy_document" "contact_lambda_ses" {
   statement {
-    effect    = "Allow"
-    actions   = ["ses:SendEmail", "ses:SendRawEmail"]
-    resources = [aws_ses_email_identity.contact.arn]
+    effect  = "Allow"
+    actions = ["ses:SendEmail", "ses:SendRawEmail"]
+    resources = [
+      aws_ses_email_identity.contact.arn,
+      # info@a-nabors.jp has a "my-first-configuration-set" Configuration Set
+      # attached (set up outside terraform, before this resource existed).
+      # SES requires ses:SendEmail authorization on that resource too whenever
+      # the sending identity has a configuration set attached.
+      "arn:aws:ses:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:configuration-set/my-first-configuration-set",
+    ]
   }
 }
 

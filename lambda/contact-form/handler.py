@@ -7,7 +7,10 @@ CORSはFunction URL側の設定で許可オリジンを絞る想定。ここで�
 環境変数:
   SES_SOURCE_EMAIL  送信元アドレス（SESで検証済みであること。未設定ならSES_DEST_EMAILを使用）
   SES_DEST_EMAIL    通知先アドレス（未設定なら info@a-nabors.jp）
-  ALLOWED_ORIGIN    Access-Control-Allow-Origin に返す値（未設定なら "*"）
+
+CORSはLambda Function URL側の設定（terraform/contact_lambda.tf）で完結させる。
+ここでCORSヘッダーを付与すると、AWSが自動付与する分と重複して
+ブラウザ側でCORSエラー（fetch失敗）になるため、絶対に付与しないこと。
 """
 
 import json
@@ -21,21 +24,14 @@ ses = boto3.client("ses")
 
 DEST_EMAIL = os.environ.get("SES_DEST_EMAIL", "info@a-nabors.jp")
 SOURCE_EMAIL = os.environ.get("SES_SOURCE_EMAIL", DEST_EMAIL)
-ALLOWED_ORIGIN = os.environ.get("ALLOWED_ORIGIN", "*")
 
 EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
-
-CORS_HEADERS = {
-    "Access-Control-Allow-Origin": ALLOWED_ORIGIN,
-    "Access-Control-Allow-Methods": "POST, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type",
-}
 
 
 def _response(status_code, body):
     return {
         "statusCode": status_code,
-        "headers": {"Content-Type": "application/json", **CORS_HEADERS},
+        "headers": {"Content-Type": "application/json"},
         "body": json.dumps(body, ensure_ascii=False),
     }
 
