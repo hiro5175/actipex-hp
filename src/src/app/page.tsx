@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { motion } from "framer-motion";
 
 export default function Home() {
@@ -25,6 +26,7 @@ export default function Home() {
               stroke="#f87171"
               strokeWidth="1.5"
               opacity="0.75"
+              initial={{ d: "M -60 300 C 350 320, 600 200, 950 180 C 1200 160, 1320 110, 1500 80" }}
               animate={{
                 d: [
                   "M -60 300 C 350 320, 600 200, 950 180 C 1200 160, 1320 110, 1500 80",
@@ -40,6 +42,7 @@ export default function Home() {
               strokeWidth="0.8"
               strokeDasharray="4 6"
               className="text-slate-400"
+              initial={{ d: "M -60 330 C 300 250, 650 240, 850 140 C 1100 150, 1280 90, 1500 110" }}
               animate={{
                 d: [
                   "M -60 330 C 300 250, 650 240, 850 140 C 1100 150, 1280 90, 1500 110",
@@ -72,7 +75,7 @@ export default function Home() {
       <main className="flex-grow max-w-6xl mx-auto px-6 py-20 w-full relative z-10">
         
         {/* 🌌 ACTIPEX MISSION セクション */}
-        <section className="pt-16 pb-48 relative w-full">
+        <section className="pt-16 pb-12 md:pb-48 relative w-full">
           <div className="w-full flex flex-col md:flex-row items-center justify-between gap-8 relative z-20">
             
             {/* 左側：メッセージコンテンツ */}
@@ -96,7 +99,7 @@ export default function Home() {
                 <span className="text-red-600">「管理の仕組み」</span>です。
               </p>
               
-              <p className="text-lg md:text-xl text-slate-600 leading-relaxed font-bold w-full max-w-none md:whitespace-nowrap break-keep tracking-normal">
+              <p className="text-base md:text-xl text-slate-600 leading-relaxed font-bold w-full max-w-none md:whitespace-nowrap md:break-keep tracking-normal">
                 バックオフィスの生産性を高めてエラーを無くし、売上拡大とバイアウト（企業売却）を選べる、次の世代へ残る強い軽貨物運送へ。
               </p>
             </div>
@@ -241,7 +244,7 @@ export default function Home() {
           <div className="space-y-3 text-left">
             <div className="text-xs font-bold text-white uppercase tracking-wider">Navigation</div>
             <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-xs font-medium">
-              <a href="/" className="hover:text-white transition-colors">ホーム</a>
+              <Link href="/" className="hover:text-white transition-colors">ホーム</Link>
               <a href="/about" className="hover:text-white transition-colors">私たちについて</a>
               <a href="/services" className="hover:text-white transition-colors">サービス</a>
               <a href="/contact" className="hover:text-white transition-colors">お問い合わせ</a>

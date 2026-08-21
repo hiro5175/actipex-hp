@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 
 const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
@@ -67,6 +68,7 @@ export default function About() {
           <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 1440 400" fill="none">
             <motion.path
               stroke="#f87171" strokeWidth="1.5" opacity="0.75"
+              initial={{ d: "M -60 280 C 300 260, 620 340, 950 260 C 1180 200, 1320 280, 1500 240" }}
               animate={{ d: [
                 "M -60 280 C 300 260, 620 340, 950 260 C 1180 200, 1320 280, 1500 240",
                 "M -60 260 C 380 280, 600 320, 900 240 C 1140 170, 1340 260, 1500 220",
@@ -77,6 +79,7 @@ export default function About() {
             />
             <motion.path
               stroke="currentColor" strokeWidth="0.8" strokeDasharray="4 6" className="text-slate-400"
+              initial={{ d: "M -60 310 C 300 280, 650 350, 850 270 C 1100 200, 1280 290, 1500 260" }}
               animate={{ d: [
                 "M -60 310 C 300 280, 650 350, 850 270 C 1100 200, 1280 290, 1500 260",
                 "M -60 320 C 350 300, 570 330, 900 260 C 1050 200, 1320 280, 1500 250",
@@ -299,7 +302,7 @@ export default function About() {
           <div className="space-y-3 text-left">
             <div className="text-xs font-bold text-white uppercase tracking-wider">Navigation</div>
             <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-xs font-medium">
-              <a href="/" className="hover:text-white transition-colors">ホーム</a>
+              <Link href="/" className="hover:text-white transition-colors">ホーム</Link>
               <a href="/about" className="hover:text-white transition-colors">私たちについて</a>
               <a href="/services" className="hover:text-white transition-colors">サービス</a>
               <a href="/contact" className="hover:text-white transition-colors">お問い合わせ</a>
