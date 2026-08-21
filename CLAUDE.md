@@ -25,7 +25,7 @@ There is no test suite/runner configured in this project.
 
 ## Deployment (manual, no CI)
 
-Deploys are done by hand from a local shell, described in `サイト構築_デプロイ.txt`:
+Deploys are done by hand from a local shell, described in `docs/deploy.md`:
 
 ```bash
 cd terraform && terraform init && terraform apply   # provision infra (one-time / on infra change)
