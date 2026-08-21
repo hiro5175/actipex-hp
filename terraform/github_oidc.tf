@@ -30,7 +30,10 @@ data "aws_iam_policy_document" "github_actions_assume_role" {
     condition {
       test     = "StringLike"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:hiro5175/actipex-hp:ref:refs/heads/main"]
+      # GitHub now embeds immutable owner/repo IDs in the sub claim
+      # (repo:OWNER@OWNER_ID/REPO@REPO_ID:ref:...) instead of plain
+      # owner/repo names, so the condition must match that format.
+      values = ["repo:hiro5175@44860196/actipex-hp@1341247165:ref:refs/heads/main"]
     }
   }
 }
